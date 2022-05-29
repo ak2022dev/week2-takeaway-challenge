@@ -1,24 +1,44 @@
 class Order
-  attr_reader :dish_names, :customer_name
+  attr_reader :dishes, :customer_name
 
-  def initialize(customer_name, items)
-    # items is an array of dish names
+  def initialize(customer_name, dishes)
+    # items is an array of dishes
     @customer_name = customer_name
-    @dish_names = []
-    items.each do |dish_name|
-      add(dish_name)
-    end
+    @dishes = dishes
   end
 
-  def add(dish_name)
-    @dish_names << dish_name
+  def add(dish)
+    @dishes << dish
   end
 
-  def remove(dish_name)
+  def remove(dish)
     # dish_name is present in the order
-    @dish_names.delete_at(@dish_names.find_index(dish_name))
+    @dishes.delete_at(@dishes.find_index(dish))
   end
+
   def produce_receipt
     # itemised including grand total
+      # produces itemised receipt
+    # Returns string in following format: "Meal 1 £Price 1 + Meal 2 £Price 2 ... = Total £GrandTotal"
+    # Start with empty string
+    # For each dish in order
+    # Add to string the name + £ then formatted price
+    # Keep a total of price meantime
+    # Then add price
+    receipt_string = ""
+    total = 0.0
+    count = 0
+    # TODO finish this method
+    while count < @dishes.length
+      receipt_string.concat(@dishes[count].name)
+      receipt_string.concat(" £")
+      receipt_string.concat(sprintf("%.2f", @dishes[count].price))
+      total += @dishes[count].price
+      receipt_string.concat(" + ") unless count == @dishes.length-1
+      count += 1
+    end
+    receipt_string.concat(" = Total £")
+    receipt_string.concat(sprintf("%.2f", total))
+    return receipt_string
   end
 end

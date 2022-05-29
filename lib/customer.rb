@@ -1,18 +1,23 @@
 class Customer
+  
+  attr_reader :customer_name, :order
 
-  def initialize(customer_name, dish_names)
+  def initialize(customer_name)
     # dish_names is an array of dish_names from the menu
     @customer_name = customer_name
-    @order = Order.new(customer_name, dish_names)
+    @order = nil
   end
-#  def ordermeal(dish_names)
-    # returns an order
-#  end
-  def verify_order  # should receipt be a separate object?
-    # produces itemised receipt
+  def ordermeal(dishes)
+    # dishes is an array of dishes
+    @order = Order.new(@customer_name, dishes)
   end
-  def add_dish(name)
+  def verify_order
+    return @order.produce_receipt
   end
-  def remove_dish(name)
+  def add_dish(dish)
+    @order.add(dish)
+  end
+  def remove_dish(dish)
+    @order.remove(dish)
   end
 end
